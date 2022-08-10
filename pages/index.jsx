@@ -4,6 +4,7 @@ import styles from '../styles/Home.module.css'
 import Section1 from '../compontns/Main/mainSection1';
 import Section2 from '../compontns/Main/mainSection2';
 import Section3 from '../compontns/Main/mainSection3';
+// import axios from 'axios';
 
 export default function Home() {
   return (
@@ -14,4 +15,3 @@ export default function Home() {
     </div>
   )
 }
-

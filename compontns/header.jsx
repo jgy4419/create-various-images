@@ -25,7 +25,6 @@ const Header = () => {
         let urlLeng = menuState === 0 ? 3 : 5;
         for (let i = 0; i < urlLeng; i++){
             array.push(
-
                 <Link href={menuState === 0 ? urlList[i] : url_designList[i]}>
                     <li className="cursor-pointer ml-10 px-2 py-2 text-center nav_li hover:bg-gray-100 rounded-md text-lg">
                         {menu_li[i]}
