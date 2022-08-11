@@ -29,3 +29,4 @@ export default async function database(req, res, next) {
     if (!indexesCreated) await createIndexs(req.db);
     return next();
 }
+

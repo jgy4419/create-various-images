@@ -4,12 +4,14 @@ import WritingInput from '../../compontns/MakeImage/writingInput';
 import FileUpload from '../../compontns/MakeImage/fileUpload';
 
 const MakeImage = () => {
+    const [imgData, setImgData] = useState('');
     return (
         <>
             <div className="makeImageContain w-screen">
                 <div className="inner">
-                    <WritingInput/>
-                    <FileUpload/>
+                    <WritingInput imgData={imgData} />
+                    {/* 자식한테 데이터를 받을 땐 useState의 setter 부분을 전송. */}
+                    <FileUpload setImgData={ setImgData } />
                 </div>
             </div>
         </>

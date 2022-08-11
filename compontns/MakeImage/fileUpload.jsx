@@ -1,25 +1,23 @@
-import React, { useState, useCallback, useRef } from 'react';
+import React, { useState, useCallback, useEffect, useRef } from 'react';
 import { useDropzone } from 'react-dropzone';
 import Image from 'next/image';
 
-const FileUpload = () => {
+const FileUpload = props => {
     // text를 입력하면 -> onChange 함수 실행
     let [innerText, setInnerText] = useState('TEST');
 
-    // function inText(text){
-    //     setInnerText(text.target.value);
-    // }
-
     const onDrop = useCallback(acceptedFiled => {
         uploadImg(acceptedFiled[0]);
+        props.setImgData(() => acceptedFiled[0]);
     }, []);
     const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
     function uploadImg(file) {
         const reader = new FileReader();
         reader.onload = e => {
             let writeImage = document.querySelector('.writeImage');
-            writeImage.style.display = 'block';
+            // writeImage.style.display = 'block';
             writeImage.src = e.target.result;
+            props.setImgData(e.target.result);
         }
         reader.readAsDataURL(file);
     }

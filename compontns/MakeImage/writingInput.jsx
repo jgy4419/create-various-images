@@ -3,7 +3,7 @@ import Head from 'next/head';
 import img from '../../public/image/macbookImg.png'
 
 // https://lts0606.tistory.com/485
-const WritingInput = () => {
+const WritingInput = ({ imgData }) => {
     let [innerText, setInnerText] = useState('Test');
     let canvas;
     let ctx;
@@ -17,31 +17,29 @@ const WritingInput = () => {
         const tHeight = text.height;
         return (x >= tx - tWidth/2 && x <= tx + tWidth/2 && y >= ty - tHeight && y <= ty);
     }
-    // test 배경 이미지 https://blog.kakaocdn.net/dn/XlVZH/btqIH50as13/LwCnDkeRzRz9kETtUMaHyk/img.jpg
-    // let img = '';
+
     const drawText = function (text) {
         let image = new Image();
         image.onload = function () {
-            ctx.fillStyle = "white";
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
-            ctx.fillStyle = text.fillStyle;
-            ctx.font = text.font;
-            ctx.textAlign = "center";
-            ctx.fillText(text.text, text.x, text.y);
-            text.width = Number(ctx.measureText(text.text).width.toFixed(0));
-            ctx.drawImage(image, 0, 0);
+            ctx.drawImage(image, 0, 0, 300, 250);
         }
-        image.src = 'https://blog.kakaocdn.net/dn/XlVZH/btqIH50as13/LwCnDkeRzRz9kETtUMaHyk/img.jpg'
+        image.src = imgData;
+
+        ctx.fillStyle = "white";
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        ctx.fillStyle = text.fillStyle;
+        ctx.font = text.font;
+        ctx.textAlign = "center";
+        ctx.fillText(text.text, text.x, text.y);
+        text.width = Number(ctx.measureText(text.text).width.toFixed(0));
     }
 
     useEffect(() => {
-        // if(!img) return
         canvas = document.getElementById('canvas');
         ctx = canvas.getContext('2d');
-        img.onload = function () {
-            ctx.drawImage(img, 0, 0);
-        }
-        const start = {x: 0, y: 0}, offset = {x: canvas.offsetLeft, y: canvas.offsetTop},
+
+        const start = { x: 0, y: 0 }, offset = { x: canvas.offsetLeft, y: canvas.offsetTop },
+            
         mouseDown = false, selection = false;
         canvas.addEventListener("mousedown", function(e){
             e.preventDefault();
@@ -86,8 +84,9 @@ const WritingInput = () => {
             width: 0,
             height: 26
         }
+
         drawText(text);
-    }, [innerText]);
+    }, [innerText, imgData]);
     return (
         <>
             <div className="inputContainer ">

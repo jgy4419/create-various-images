@@ -8,25 +8,31 @@ const Header = () => {
     let [url_designList, set_Url_designList] = useState(['/makeImage', '/banner', '/businessCard', '/others', '/test']);
     let [menuState, setMenuState] = useState(0);
     useEffect(() => {
-        const li = document.querySelectorAll('.nav_li');
-        const close = document.querySelector('.close');
-        (menuState === 1) ? close.style.display = 'block' : close.style.display = 'none';
-        for (let i = 0; i < li.length; i++){
-            li[1].addEventListener('click', () => {
-                setMenu_li(() => menu_design);  
-                setMenuState(1);
+        const design_li = document.querySelectorAll('.design_menu_li');
+        const menu_li = document.querySelectorAll('.menu_li')
+        menu_li[1].addEventListener('mouseover', () => {
+            design_li.forEach(item => {
+                item.style.display = 'block'
             })
-        }
-    }, []);
+            setMenuState(1);
+            document.querySelector('.close').style.display = 'block';
+        })
+        document.querySelector('.close').addEventListener('click', () => {
+            design_li.forEach(item => {
+                item.style.display = 'none'
+            })
+            setMenuState(0);
+            document.querySelector('.close').style.display = 'none';
+        });
+    }, [menuState]);
 
     // url 적용
     function UrlList() {
         let array = []; 
-        let urlLeng = menuState === 0 ? 3 : 5;
-        for (let i = 0; i < urlLeng; i++){
+        for (let i = 0; i < 3; i++){
             array.push(
-                <Link href={menuState === 0 ? urlList[i] : url_designList[i]}>
-                    <li className="cursor-pointer ml-10 px-2 py-2 text-center nav_li hover:bg-gray-100 rounded-md text-lg">
+                <Link href={urlList[i]}>
+                    <li className="menu_li cursor-pointer ml-10 px-2 py-2 text-center hover:bg-gray-100 rounded-md text-lg">
                         {menu_li[i]}
                     </li>
                 </Link>
@@ -39,13 +45,23 @@ const Header = () => {
             <div className="h-4/5 w-screen">
                 <div className="inner m-left">
                     <ul className="nav_ul flex items-center mx-10">
-                        <li className="logo">LOGO</li>
-                        <UrlList />
-                        <li onClick={() => {
-                            setMenuState(0);
-                            setMenu_li(() => ['홈', '디자인', 'about']); 
-                        }}
-                            className="close ml-20 font-semibold text-2xl cursor-pointer">X</li>
+                        <Link href="/">
+                            <a className="logo cursor-pointer">LOGO</a>
+                        </Link>
+                        <UrlList/>
+                    </ul>
+                    <ul className="nav_ul flex items-center mx-10">
+                        {
+                            menu_design.map((item, index) => {
+                                return (
+                                    <Link key={index} href={ url_designList[index] }>
+                                        <li className="hidden design_menu_li cursor-pointer ml-10 px-2 py-2 text-center nav_li hover:bg-gray-100 rounded-md text-lg"
+                                        >{item}</li>
+                                    </Link>
+                                )
+                            })
+                        }
+                        <li className="close cursor-pointer hidden text-xl font-semibold ml-10">X</li>
                     </ul>
                 </div>
             </div>
