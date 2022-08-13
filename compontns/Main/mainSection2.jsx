@@ -2,6 +2,7 @@ import React, {useState, useEffect} from 'react';
 
 const MainSection2 = () => {
     let [introductionItem, setIntroductionItem] = useState(['재밌는 사진', '현수막 제작', '명함', '다른 사람이 만든 것들']);
+    let img = ['http://topclass.chosun.com/news/photo/202208/30526_40709_2247.jpg', ]
     return (
         <>
             <div className="section2-contain">

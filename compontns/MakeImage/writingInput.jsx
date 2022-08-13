@@ -6,9 +6,10 @@ import EditBox from './editBox';
 // https://lts0606.tistory.com/485
 const WritingInput = ({ imgData }) => {
     let [innerText, setInnerText] = useState('');
-    let canvas;
-    let ctx;
-    let image;
+    let [textColor, setTextColor] = useState('black');
+    let [fontSize, setFontSize] = useState('26px');
+
+    let canvas, ctx, image;
 
     const inText = (text) => {
         setInnerText(text.target.value);
@@ -17,7 +18,7 @@ const WritingInput = ({ imgData }) => {
     const textSelection = function (x, y, text) {
         const tx = text.x, ty = text.y, tWidth = text.width;
         const tHeight = text.height;
-        return (x >= tx - tWidth/2 && x <= tx + tWidth/2 && y >= ty - tHeight && y <= ty);
+        return (x >= tx - tWidth / 2 && x <= tx + tWidth / 2 && y >= ty - tHeight && y <= ty);
     }
 
     const drawText = function (text) {
@@ -36,15 +37,15 @@ const WritingInput = ({ imgData }) => {
     }
 
     const downloadImg = (event) => {
-        // console.log(img.src);
-        // if (img.src === '/_next/static/media/macbookImg.aebb135e.png') {
-        //     alert('이미지 파일이 없습니다.')
-        //     event.preventDefault();
-        // }
         let downloadData = document.querySelector('.download');
         downloadData.href = canvas.toDataURL();
         
     }
+
+    // 색이나, 글자 크기 변경되면 text 사라짐.
+    useEffect(() => {
+        setInnerText('');
+    }, [textColor, fontSize]);
 
     useEffect(() => {
         canvas = document.getElementById('canvas');
@@ -84,13 +85,13 @@ const WritingInput = ({ imgData }) => {
 
         canvas.addEventListener("mouseup", function(e){
             mouseDown = false;
-            selection = false;
+            selection = false; 
         });
 
         const text = {
             text: innerText,
-            font: "26px nanumBold",
-            fillStyle: "#333",
+            font: `${fontSize} nanumBold`,
+            fillStyle: textColor,
             x: canvas.width,
             y: canvas.height/2,
             width: 0,
@@ -105,7 +106,7 @@ const WritingInput = ({ imgData }) => {
                 <div className="inner">
                     <div className="editBox flex">
                         <p className="my-5 mr-10 text-xl font-semibold">글을 입력해주세요!</p>
-                        <EditBox className=""/>
+                        <EditBox setTextColor={ setTextColor } setFontSize={ setFontSize }/>
                     </div>
                     <input
                         onChange={inText}
@@ -124,13 +125,7 @@ const WritingInput = ({ imgData }) => {
                             className="download" href="" download="my_image.png">다운로드</a>
                     </button>
                 </div>    
-            </div>  
-            <style jsx>{`
-                .canvas{
-                    font-size: 20px;
-                    background-color: #333
-                }
-            `}</style>
+            </div>
         </>
     );
 };

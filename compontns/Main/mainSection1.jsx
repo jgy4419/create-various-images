@@ -27,7 +27,7 @@ const MainSection1 = () => {
                 .titleImg{
                     position: absolute;
                     filter: brightness(.5);
-                    background-image: url('http://itimg.chosun.com/sitedata/image/202112/17/2021121700826_0.jpg');
+                    background-image: url('http://topclass.chosun.com/news/photo/202208/30526_40709_2247.jpg');
                 }
             `}</style>
         </>

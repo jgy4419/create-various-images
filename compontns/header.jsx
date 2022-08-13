@@ -1,12 +1,16 @@
 import React, { useEffect, useState } from 'react';
+import { useRouter } from 'next/router';
 import Link from 'next/link';
 // https://www.canva.com/ko_kr/create/memes/
 const Header = () => {
+    let router = useRouter();
+
     let [menu_li, setMenu_li] = useState(['홈', '디자인', 'about']);
     let [menu_design, setMenu_design] = useState(['재밌는 사진', '현수막 제작', '명함', '다른 사람이 만든 사진', '다른 기능']);
     let [urlList, setUrlList] = useState(['/', '', '/about']);
     let [url_designList, set_Url_designList] = useState(['/makeImage', '/banner', '/businessCard', '/others', '/test']);
     let [menuState, setMenuState] = useState(0);
+
     useEffect(() => {
         const design_li = document.querySelectorAll('.design_menu_li');
         const menu_li = document.querySelectorAll('.menu_li')
@@ -25,6 +29,19 @@ const Header = () => {
             document.querySelector('.close').style.display = 'none';
         });
     }, [menuState]);
+
+    useEffect(() => {
+        const design_li = document.querySelectorAll('.design_menu_li');
+        // url이 변경되면 실행되는 코드
+        router.events.on('routeChangeComplete', () => {
+            setMenuState(0);
+            design_li.forEach(item => {
+                item.style.display = 'none'
+            })
+            document.querySelector('.close').style.display = 'none';
+        })
+    }, []);
+
 
     // url 적용
     function UrlList() {
