@@ -25,14 +25,7 @@ const FileUpload = props => {
         <>
             <div className="uplodeContain">
                 <div className="inner">
-                    {/* <p className="my-5 text-xl font-semibold">글을 입력해주세요!</p>
-                    <input
-                        onChange={inText}
-                        className="w-1/2 border-2 h-10 p-4 rounded-lg mb-10"
-                        placeholder="이미지에 들어갈 글을 작성해주세요!"
-                        type="text"
-                    />   */}
-                    <div className="relative uplode h-80 left-0 right-0 mb-10">
+                    <div className="relative uplode left-0 right-0 mb-10">
                         <img className="writeImage hidden w-1/2 m-auto rounded-lg mb-10" src='' alt="이미지" />
                         {/* <p className="absolute top-0">{ innerText }</p> */}
                     </div>

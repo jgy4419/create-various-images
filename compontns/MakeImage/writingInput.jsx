@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import Head from 'next/head';
 import img from '../../public/image/macbookImg.png'
+import EditBox from './editBox';
 
 // https://lts0606.tistory.com/485
 const WritingInput = ({ imgData }) => {
-    let [innerText, setInnerText] = useState('Test');
+    let [innerText, setInnerText] = useState('');
     let canvas;
     let ctx;
+    let image;
 
     const inText = (text) => {
         setInnerText(text.target.value);
@@ -19,19 +21,29 @@ const WritingInput = ({ imgData }) => {
     }
 
     const drawText = function (text) {
-        let image = new Image();
+        image = new Image();
         image.onload = function () {
             ctx.drawImage(image, 0, 0, 300, 250);
+            ctx.fillText(text.text, text.x, text.y);
+            ctx.font = text.font;
         }
         image.src = imgData;
-
+        ctx.textAlign = "center";
         ctx.fillStyle = "white";
         ctx.fillRect(0, 0, canvas.width, canvas.height);
         ctx.fillStyle = text.fillStyle;
-        ctx.font = text.font;
-        ctx.textAlign = "center";
-        ctx.fillText(text.text, text.x, text.y);
         text.width = Number(ctx.measureText(text.text).width.toFixed(0));
+    }
+
+    const downloadImg = (event) => {
+        // console.log(img.src);
+        // if (img.src === '/_next/static/media/macbookImg.aebb135e.png') {
+        //     alert('이미지 파일이 없습니다.')
+        //     event.preventDefault();
+        // }
+        let downloadData = document.querySelector('.download');
+        downloadData.href = canvas.toDataURL();
+        
     }
 
     useEffect(() => {
@@ -91,7 +103,10 @@ const WritingInput = ({ imgData }) => {
         <>
             <div className="inputContainer ">
                 <div className="inner">
-                    <p className="my-5 text-xl font-semibold">글을 입력해주세요!</p>
+                    <div className="editBox flex">
+                        <p className="my-5 mr-10 text-xl font-semibold">글을 입력해주세요!</p>
+                        <EditBox className=""/>
+                    </div>
                     <input
                         onChange={inText}
                         id="txtBox"
@@ -99,9 +114,16 @@ const WritingInput = ({ imgData }) => {
                         placeholder="이미지에 들어갈 글을 작성해주세요!"
                         type="text"
                     />  
+                    <div className="content flex">
+                        <canvas id="canvas" height="300" width="300px" 
+                            className="canvas m-auto left-0 right-0 bg-transparent"></canvas>
+                    </div>
+                    <button
+                        className="w-20 h-10 bg-gray-100 rounded-lg text-slate-800 font-bold">
+                        <a onClick={downloadImg}
+                            className="download" href="" download="my_image.png">다운로드</a>
+                    </button>
                 </div>    
-                <canvas id="canvas" height="300" width="800px" 
-                className="canvas absolute z-10 bg-transparent"></canvas>
             </div>  
             <style jsx>{`
                 .canvas{
