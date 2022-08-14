@@ -1,15 +1,50 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import Head from 'next/head';
 import img from '../../public/image/macbookImg.png'
 import EditBox from './editBox';
 
 // https://lts0606.tistory.com/485
+// https://jm0121.tistory.com/3 text 여러개 추가하는거 참고
 const WritingInput = ({ imgData }) => {
     let [innerText, setInnerText] = useState('');
     let [textColor, setTextColor] = useState('black');
     let [fontSize, setFontSize] = useState('26px');
+    let [textStyle, setTextStyle] = useState('nanumBold');
+    let [textBox, setTextBox] = useState([]);
+
+    let textInput = useRef('');
 
     let canvas, ctx, image;
+
+    const addText = event => {
+        if (textInput.current.value === '') {
+            alert('이전 text를 입력하고 추가해주세요.');
+            return;
+        }
+        setTextBox(textBox.concat(<TextBox/>))
+    }
+    const TextBox = () => {
+        return (
+            <div className="textInputBox">
+                <div className="editBox flex">
+                    <p className="my-5 mr-10 text-xl font-semibold">글을 입력해주세요!</p>
+                    <EditBox
+                        setTextColor={setTextColor}
+                        setFontSize={setFontSize}
+                        setTextStyle={setTextStyle}
+                    />
+                </div>
+                <input
+                    ref={ textInput }
+                    onChange={inText}
+                    id="txtBox"
+                    className="w-1/2 border-2 h-10 p-4 rounded-lg mb-10"
+                    placeholder="이미지에 들어갈 글을 작성해주세요!"
+                    type="text"
+                />  
+            </div>
+        )
+    }
 
     const inText = (text) => {
         setInnerText(text.target.value);
@@ -44,6 +79,7 @@ const WritingInput = ({ imgData }) => {
 
     // 색이나, 글자 크기 변경되면 text 사라짐.
     useEffect(() => {
+        console.log(textBox);
         setInnerText('');
     }, [textColor, fontSize]);
 
@@ -104,25 +140,20 @@ const WritingInput = ({ imgData }) => {
         <>
             <div className="inputContainer ">
                 <div className="inner">
-                    <div className="editBox flex">
-                        <p className="my-5 mr-10 text-xl font-semibold">글을 입력해주세요!</p>
-                        <EditBox setTextColor={ setTextColor } setFontSize={ setFontSize }/>
-                    </div>
-                    <input
-                        onChange={inText}
-                        id="txtBox"
-                        className="w-1/2 border-2 h-10 p-4 rounded-lg mb-10"
-                        placeholder="이미지에 들어갈 글을 작성해주세요!"
-                        type="text"
-                    />  
+                    {/* textBox 부분 */}
+                    { textBox } 
+                    <button className="absolute rounded-xl bg-gray-300 w-32 h-10 text-white font-bold ml-5 right-80"
+                    onClick={ addText }>텍스트 추가</button>
                     <div className="content flex">
                         <canvas id="canvas" height="300" width="300px" 
                             className="canvas m-auto left-0 right-0 bg-transparent"></canvas>
+                                                <canvas id="canvas" height="300" width="300px" 
+                            className="canvas m-auto left-0 right-0 bg-transparent"></canvas>
                     </div>
                     <button
-                        className="w-20 h-10 bg-gray-100 rounded-lg text-slate-800 font-bold">
+                        className="w-40 h-10 bg-gray-300 text-white rounded-lg text-slate-800 font-bold">
                         <a onClick={downloadImg}
-                            className="download" href="" download="my_image.png">다운로드</a>
+                            className="download" href="" download="my_image.png">이미지 다운로드</a>
                     </button>
                 </div>    
             </div>

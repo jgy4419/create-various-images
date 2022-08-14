@@ -5,14 +5,14 @@ const MainSection2 = () => {
     let img = ['http://topclass.chosun.com/news/photo/202208/30526_40709_2247.jpg', ]
     return (
         <>
-            <div className="section2-contain">
+            <div className="section2-contain md:h-screen">
                 <div className="inner relative">
                     <p className="text-center text-2xl font-semibold">몇 분 만에 빠르게 만들어보아요!</p>
-                    <ul className="abolute section2-ul flex flex-wrap justify-around w-full columns-3xs">
+                    <ul className="abolute section2-ul md:block lg:flex flex-wrap justify-around w-full columns-3xs">
                     {
                         [...introductionItem].map((item, index) => {
                             return (
-                                <li className="section2-li w-2/5 h-4/5 ml-1 bg-gray-100 border-2 mt-10 rounded-lg text-center"
+                                <li className="section2-li lg:w-2/5 md:full h-4/5 ml-1 bg-gray-100 border-2 mt-10 rounded-lg text-center"
                                     key={index}>
                                     <p >{ item }</p>
                                 </li>
