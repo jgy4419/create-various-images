@@ -34,8 +34,8 @@ const FileUpload = props => {
                         <input {...getInputProps()} />
                         {
                             isDragActive ? 
-                                <p className="text-center pt-12 text-xl font-semibold">Drag the files here!</p> :
-                                <p className="text-center pt-12 text-xl font-semibold">Drag and drop some files here. or click to select files</p>
+                            <p className="text-center pt-12 text-xl font-semibold">Drag the image files here!</p> :
+                            <p className="text-center pt-12 text-xl font-semibold">Drag and drop some image files here. or click to select files</p>
                         }
                     </div>
                 </div>

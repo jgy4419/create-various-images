@@ -5,6 +5,7 @@ import EditBox from './editBox';
 
 // https://lts0606.tistory.com/485
 // https://jm0121.tistory.com/3 text 여러개 추가하는거 참고
+// https://wormwlrm.github.io/kwakcheolyong/ <- 이렇게 만들기
 const WritingInput = ({ imgData }) => {
     let [innerText, setInnerText] = useState('');
     let [textColor, setTextColor] = useState('black');
@@ -15,36 +16,7 @@ const WritingInput = ({ imgData }) => {
     let textInput = useRef('');
 
     let canvas, ctx, image;
-
-    const addText = event => {
-        if (textInput.current.value === '') {
-            alert('이전 text를 입력하고 추가해주세요.');
-            return;
-        }
-        setTextBox(textBox.concat(<TextBox/>))
-    }
-    const TextBox = () => {
-        return (
-            <div className="textInputBox">
-                <div className="editBox flex">
-                    <p className="my-5 mr-10 text-xl font-semibold">글을 입력해주세요!</p>
-                    <EditBox
-                        setTextColor={setTextColor}
-                        setFontSize={setFontSize}
-                        setTextStyle={setTextStyle}
-                    />
-                </div>
-                <input
-                    ref={ textInput }
-                    onChange={inText}
-                    id="txtBox"
-                    className="w-1/2 border-2 h-10 p-4 rounded-lg mb-10"
-                    placeholder="이미지에 들어갈 글을 작성해주세요!"
-                    type="text"
-                />  
-            </div>
-        )
-    }
+    let text;
 
     const inText = (text) => {
         setInnerText(text.target.value);
@@ -58,9 +30,17 @@ const WritingInput = ({ imgData }) => {
 
     const drawText = function (text) {
         image = new Image();
+        let height = 10;
+        let texts = [];
+        // enter('\n') 기준으로 문자열 나누기
+        texts.push(text.text.split('\n'));
         image.onload = function () {
+            let height = 150;
             ctx.drawImage(image, 0, 0, 300, 250);
-            ctx.fillText(text.text, text.x, text.y);
+            for (let i = 0; i < texts[0].length; i++){
+                height += 30;
+                ctx.fillText(texts[0][i], 165, height);   
+            }
             ctx.font = text.font;
         }
         image.src = imgData;
@@ -73,13 +53,12 @@ const WritingInput = ({ imgData }) => {
 
     const downloadImg = (event) => {
         let downloadData = document.querySelector('.download');
-        downloadData.href = canvas.toDataURL();
-        
+        downloadData.href = canvas.toDataURL();   
     }
 
     // 색이나, 글자 크기 변경되면 text 사라짐.
     useEffect(() => {
-        console.log(textBox);
+        // console.log(textBox);
         setInnerText('');
     }, [textColor, fontSize]);
 
@@ -124,30 +103,67 @@ const WritingInput = ({ imgData }) => {
             selection = false; 
         });
 
-        const text = {
+        text = {
             text: innerText,
             font: `${fontSize} nanumBold`,
             fillStyle: textColor,
             x: canvas.width,
-            y: canvas.height/2,
+            y: canvas.heigh,
             width: 0,
-            height: 26
+            height: 100
         }
 
         drawText(text);
     }, [innerText, imgData]);
+
+    // text 추가 컴포넌트
+    const TextBox = () => {
+        return (
+            <div className="textInputBox">
+                <div className="editBox flex">
+                    <p className="my-5 mr-10 text-xl font-semibold">글을 입력해주세요!</p>
+                    <EditBox
+                        setTextColor={setTextColor}
+                        setFontSize={setFontSize}
+                        setTextStyle={setTextStyle}
+                    />
+                </div>
+                <textarea
+                    ref={ textInput }
+                    onChange={inText}
+                    id="txtBox"
+                    className="w-1/2 border-2 h-10 p-4 rounded-lg mb-10"
+                    placeholder="이미지에 들어갈 글을 작성해주세요!"
+                    type="text"
+                />  
+            </div>
+        )
+    }
+
     return (
         <>
             <div className="inputContainer ">
                 <div className="inner">
-                    {/* textBox 부분 */}
-                    { textBox } 
-                    <button className="absolute rounded-xl bg-gray-300 w-32 h-10 text-white font-bold ml-5 right-80"
-                    onClick={ addText }>텍스트 추가</button>
+                    <div className="textInputBox">
+                <div className="editBox flex">
+                    <p className="my-5 mr-10 text-xl font-semibold">글을 입력해주세요!</p>
+                    <EditBox
+                        setTextColor={setTextColor}
+                        setFontSize={setFontSize}
+                        setTextStyle={setTextStyle}
+                    />
+                </div>
+                <textarea
+                    ref={ textInput }
+                    onChange={inText}
+                    id="txtBox"
+                    className="w-1/2 border-2 h-10 p-4 rounded-lg mb-10"
+                    placeholder="이미지에 들어갈 글을 작성해주세요!"
+                    type="text"
+                />  
+            </div>
                     <div className="content flex">
                         <canvas id="canvas" height="300" width="300px" 
-                            className="canvas m-auto left-0 right-0 bg-transparent"></canvas>
-                                                <canvas id="canvas" height="300" width="300px" 
                             className="canvas m-auto left-0 right-0 bg-transparent"></canvas>
                     </div>
                     <button

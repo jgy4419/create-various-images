@@ -6,8 +6,26 @@ import Section2 from '../compontns/Main/mainSection2';
 import Section3 from '../compontns/Main/mainSection3';
 import { useState, useEffect } from 'react';
 
+(
+  async () => {
+    const response = await fetch('http://localhost:3000/api/graphql', {
+      method: 'POST',
+      headers: {
+        'Content-type': 'applocation/json',
+      },
+      body: JSON.stringify({ query: '{ users { name } }' }),
+    });
+    const json = await response.json();
+    console.log( json );
+  }
+)();
 
-export default function Home({ characters}) {
+export default function Home({ characters }) {
+  // useEffect(() => {
+  //   fetch('/api/data')
+  //     // .then(res => res.json())
+  //     .then(data => console.log(data));
+  // }, [])
   return (
     <>
       <div className="mainContain">
