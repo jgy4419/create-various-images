@@ -8,10 +8,10 @@ const MainSection1 = () => {
                 <div className="inner">
                     <div className="relative introduction-box">
                         <div className="textBox relative z-10 text-center top-10 text-white">
-                            <p className="text-4xl font-bold">
-                                개성 넘치는 사진 만들기
+                            <p className="md:text-3xl lg:text-4xl font-bold">
+                                영화의 한 장면 만들기
                             </p>
-                            <p className="mt-5 text-2xl font-semibold">무료로 다양한 이미지를 만들어봐요!</p>
+                            <p className="mt-5 md:text-xl lg:text-2xl font-semibold">다양한 대사를 넣어 하나의 장면을 완성해봐요!</p>
                         </div>
                         <div className="titleImg absolute top-0 w-full h-80 rounded-lg" />
                     </div>

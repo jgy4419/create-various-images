@@ -35,11 +35,11 @@ const WritingInput = ({ imgData }) => {
         // enter('\n') 기준으로 문자열 나누기
         texts.push(text.text.split('\n'));
         image.onload = function () {
-            let height = 150;
-            ctx.drawImage(image, 0, 0, 300, 250);
+            let height = 230;
+            ctx.drawImage(image, 0, 0, 500, 350);
             for (let i = 0; i < texts[0].length; i++){
                 height += 30;
-                ctx.fillText(texts[0][i], 165, height);   
+                ctx.fillText(texts[0][i], 250, height);   
             }
             ctx.font = text.font;
         }
@@ -51,6 +51,7 @@ const WritingInput = ({ imgData }) => {
         text.width = Number(ctx.measureText(text.text).width.toFixed(0));
     }
 
+    // 이미지를 다운로드 할 수 있게 해준다.
     const downloadImg = (event) => {
         let downloadData = document.querySelector('.download');
         downloadData.href = canvas.toDataURL();   
@@ -69,7 +70,7 @@ const WritingInput = ({ imgData }) => {
         const start = { x: 0, y: 0 }, offset = { x: canvas.offsetLeft, y: canvas.offsetTop },
             
         mouseDown = false, selection = false;
-        canvas.addEventListener("mousedown", function(e){
+        canvas.addEventListener("mousedown", function (e) {
             e.preventDefault();
             e.stopPropagation();
             const winScrollTop = window.scrollY;
@@ -108,7 +109,7 @@ const WritingInput = ({ imgData }) => {
             font: `${fontSize} nanumBold`,
             fillStyle: textColor,
             x: canvas.width,
-            y: canvas.heigh,
+            y: canvas.heigh + 20,
             width: 0,
             height: 100
         }
@@ -122,20 +123,15 @@ const WritingInput = ({ imgData }) => {
             <div className="textInputBox">
                 <div className="editBox flex">
                     <p className="my-5 mr-10 text-xl font-semibold">글을 입력해주세요!</p>
-                    <EditBox
-                        setTextColor={setTextColor}
-                        setFontSize={setFontSize}
-                        setTextStyle={setTextStyle}
+                    <textarea
+                        ref={ textInput }
+                        onChange={inText}
+                        id="txtBox"
+                        className="w-1/2 border-2 h-10 p-4 rounded-lg mb-10"
+                        placeholder="이미지에 들어갈 글을 작성해주세요!"
+                        type="text"
                     />
                 </div>
-                <textarea
-                    ref={ textInput }
-                    onChange={inText}
-                    id="txtBox"
-                    className="w-1/2 border-2 h-10 p-4 rounded-lg mb-10"
-                    placeholder="이미지에 들어갈 글을 작성해주세요!"
-                    type="text"
-                />  
             </div>
         )
     }
@@ -144,30 +140,31 @@ const WritingInput = ({ imgData }) => {
         <>
             <div className="inputContainer ">
                 <div className="inner">
-                    <div className="textInputBox">
-                <div className="editBox flex">
-                    <p className="my-5 mr-10 text-xl font-semibold">글을 입력해주세요!</p>
-                    <EditBox
-                        setTextColor={setTextColor}
-                        setFontSize={setFontSize}
-                        setTextStyle={setTextStyle}
-                    />
-                </div>
-                <textarea
-                    ref={ textInput }
-                    onChange={inText}
-                    id="txtBox"
-                    className="w-1/2 border-2 h-10 p-4 rounded-lg mb-10"
-                    placeholder="이미지에 들어갈 글을 작성해주세요!"
-                    type="text"
-                />  
-            </div>
+                    
                     <div className="content flex">
-                        <canvas id="canvas" height="300" width="300px" 
-                            className="canvas m-auto left-0 right-0 bg-transparent"></canvas>
+                        <canvas id="canvas" width="500px" height="350" 
+                            className="mt-10 canvas m-auto left-0 right-0 bg-transparent leading-10"></canvas>
+                    </div>
+                    <div className="textInputBox">
+                        <div className="editBox flex">
+                            <p className="my-5 mr-10 text-xl font-semibold">글을 입력해주세요!</p>
+                        </div>
+                        <textarea
+                            ref={ textInput }
+                            onChange={inText}
+                            id="txtBox"
+                            className="lg:w-1/2 md: w-full border-2 h-12   p-4 rounded-lg mb-10"
+                            placeholder="이미지에 들어갈 글을 작성해주세요!"
+                            type="text"
+                        />  
+                        <EditBox
+                            setTextColor={setTextColor}
+                            setFontSize={setFontSize}
+                            setTextStyle={setTextStyle}
+                        />
                     </div>
                     <button
-                        className="w-40 h-10 bg-gray-300 text-white rounded-lg text-slate-800 font-bold">
+                        className="w-40 h-10 bg-gray-300 text-white rounded-lg text-slate-800 font-bold mt-10">
                         <a onClick={downloadImg}
                             className="download" href="" download="my_image.png">이미지 다운로드</a>
                     </button>
