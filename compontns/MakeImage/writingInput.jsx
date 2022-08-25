@@ -8,8 +8,8 @@ import EditBox from './editBox';
 // https://wormwlrm.github.io/kwakcheolyong/ <- 이렇게 만들기
 const WritingInput = ({ imgData }) => {
     let [innerText, setInnerText] = useState('');
-    let [textColor, setTextColor] = useState('black');
-    let [fontSize, setFontSize] = useState('26px');
+    let [textColor, setTextColor] = useState('white');
+    let [fontSize, setFontSize] = useState('35px');
     let [textStyle, setTextStyle] = useState('nanumBold');
     let [textBox, setTextBox] = useState([]);
 
@@ -38,14 +38,16 @@ const WritingInput = ({ imgData }) => {
             let height = 230;
             ctx.drawImage(image, 0, 0, 500, 350);
             for (let i = 0; i < texts[0].length; i++){
-                height += 30;
+                height += 40;
                 ctx.fillText(texts[0][i], 250, height);   
+                ctx.strokeText(texts[0][i], 250, height);
+                ctx.font = `${fontSize} BM YEONSUNG OTF`;
+                ctx.strokeStyle = 'black';
             }
-            ctx.font = text.font;
+            document.querySelector('.content').style.display = 'flex';
         }
         image.src = imgData;
         ctx.textAlign = "center";
-        ctx.fillStyle = "white";
         ctx.fillRect(0, 0, canvas.width, canvas.height);
         ctx.fillStyle = text.fillStyle;
         text.width = Number(ctx.measureText(text.text).width.toFixed(0));
@@ -86,8 +88,8 @@ const WritingInput = ({ imgData }) => {
             e.preventDefault();
             if(mouseDown && selection){
                 const winScrollTop = window.scrollY,
-                      mouseX = parseInt(e.clientX - offset.x),
-                      mouseY = parseInt(e.clientY - offset.y + winScrollTop);
+                    mouseX = parseInt(e.clientX - offset.x),
+                    mouseY = parseInt(e.clientY - offset.y + winScrollTop);
                 const dx = mouseX - start.x, dy = mouseY - start.y;
                     
                 start.x = mouseX;
@@ -140,10 +142,9 @@ const WritingInput = ({ imgData }) => {
         <>
             <div className="inputContainer ">
                 <div className="inner">
-                    
-                    <div className="content flex">
-                        <canvas id="canvas" width="500px" height="350" 
-                            className="mt-10 canvas m-auto left-0 right-0 bg-transparent leading-10"></canvas>
+                    <div className="content flex hidden">
+                        <canvas id="canvas" width="500%" height="350vh"
+                            className="canvas mt-10 m-auto left-0 right-0 bg-transparent leading-10"></canvas>
                     </div>
                     <div className="textInputBox">
                         <div className="editBox flex">
@@ -153,7 +154,7 @@ const WritingInput = ({ imgData }) => {
                             ref={ textInput }
                             onChange={inText}
                             id="txtBox"
-                            className="lg:w-1/2 md: w-full border-2 h-12   p-4 rounded-lg mb-10"
+                            className="lg:w-1/2 md: w-full border-2 h-12   p-4 rounded-lg"
                             placeholder="이미지에 들어갈 글을 작성해주세요!"
                             type="text"
                         />  

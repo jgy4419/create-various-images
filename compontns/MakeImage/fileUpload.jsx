@@ -34,8 +34,8 @@ const FileUpload = props => {
                         <input {...getInputProps()} />
                         {
                             isDragActive ? 
-                            <p className="text-center pt-12 lg:text-xl md:text-base font-semibold">Drag the image files here!</p> :
-                            <p className="text-center pt-12 lg: lg:text-xl md:text-base font-semibold">Drag and drop some image files here. or click to select files</p>
+                            <p className="text-center pt-12 lg:text-xl md:text-base font-semibold">이미지가 드래그 되었습니다!</p> :
+                            <p className="text-center pt-12 lg: lg:text-xl md:text-base font-semibold">여기를 클릭하거나, 이미지 파일을 드래그 해주세요!</p>
                         }
                     </div>
                 </div>

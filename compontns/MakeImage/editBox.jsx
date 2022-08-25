@@ -17,7 +17,7 @@ const EditBox = ({ setTextColor, setFontSize, setTextStyle }) => {
     return (
         <>
             <div className="editContain mt-3">
-                <select onChange={changeStyle} className="colorContain h-10">
+                <select onChange={changeStyle} className="colorContain h-10 px-2">
                     {
                         colorList.map((color, index) => {
                             return (
@@ -26,7 +26,7 @@ const EditBox = ({ setTextColor, setFontSize, setTextStyle }) => {
                         })
                     }
                 </select>  
-                <select onChange={changeStyle} className="fontSizeContain h-10">
+                <select onChange={changeStyle} className="fontSizeContain h-10 px-2">
                     {
                         fontSizeList.map((size, index) => {
                             return (
@@ -35,7 +35,7 @@ const EditBox = ({ setTextColor, setFontSize, setTextStyle }) => {
                         })
                     }
                 </select>  
-                <select onChange={changeStyle} className="fontStyleContain h-10">
+                <select onChange={changeStyle} className="fontStyleContain h-10 px-2">
                     {
                         fontStyle.map((style, index) => {
                             return (
