@@ -21,11 +21,6 @@ import { useState, useEffect } from 'react';
 )();
 
 export default function Home({ characters }) {
-  // useEffect(() => {
-  //   fetch('/api/data')
-  //     // .then(res => res.json())
-  //     .then(data => console.log(data));
-  // }, [])
   return (
     <>
       <div className="mainContain">

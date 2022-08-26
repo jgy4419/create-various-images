@@ -2,6 +2,7 @@ import React, { useEffect, useState, useRef } from 'react';
 import Head from 'next/head';
 import img from '../../public/image/macbookImg.png'
 import EditBox from './editBox';
+import { inFile } from '../../lib/shareData';
 
 // https://lts0606.tistory.com/485
 // https://jm0121.tistory.com/3 text 여러개 추가하는거 참고
@@ -57,6 +58,14 @@ const WritingInput = ({ imgData }) => {
     const downloadImg = (event) => {
         let downloadData = document.querySelector('.download');
         downloadData.href = canvas.toDataURL();   
+    }
+
+    // 자신이 만든 이미지를 공유.
+    const shareImg = event => {
+        alert('추가되었습니다!');
+        let downloadData = document.querySelector('.download');
+        event.preventDefault();
+        inFile(canvas.toDataURL());   
     }
 
     // 색이나, 글자 크기 변경되면 text 사라짐.
@@ -168,6 +177,11 @@ const WritingInput = ({ imgData }) => {
                         className="w-40 h-10 bg-gray-300 text-white rounded-lg text-slate-800 font-bold mt-10">
                         <a onClick={downloadImg}
                             className="download" href="" download="my_image.png">이미지 다운로드</a>
+                    </button>
+                    <button
+                        className="w-40 h-10 bg-gray-300 text-white rounded-lg text-slate-800 font-bold mx-5 mt-10">
+                        <a onClick={shareImg}
+                            className="download" href="" download="my_image.png">이미지 공유</a>
                     </button>
                 </div>    
             </div>
