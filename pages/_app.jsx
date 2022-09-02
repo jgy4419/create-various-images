@@ -1,4 +1,3 @@
-
 import '../styles/globals.css';
 import Layout from '../compontns/layout';
 import 'tailwindcss/tailwind.css';
@@ -11,4 +10,4 @@ function MyApp({ Component, pageProps }) {
     )
 }
 
-export default MyApp
+export default MyApp;
